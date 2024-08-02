@@ -19,8 +19,6 @@ services:
     image: mysql:8-oracle # -oracle tag supports arm64 architecture!
     restart: unless-stopped
     container_name: mlflow_db
-    command:
-      - table_definition_cache=100
     expose:
       - "3306"
     environment:
