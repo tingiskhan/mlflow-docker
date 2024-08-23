@@ -15,6 +15,7 @@ services:
       - public
     volumes:
       - minio_new_volume:/data
+
   db:
     image: mysql:8-oracle # -oracle tag supports arm64 architecture!
     restart: unless-stopped
@@ -50,6 +51,7 @@ services:
     depends_on:
       wait-for-db:
         condition: service_completed_successfully
+
   create_s3_buckets:
     image: minio/mc
     depends_on:
@@ -62,6 +64,7 @@ services:
       "
     networks:
       - internal
+
   wait-for-db:
     image: atkrad/wait4x
     depends_on:
@@ -69,6 +72,7 @@ services:
     command: tcp db:3306 -t 90s -i 250ms
     networks:
       - internal
+
   run_test_experiment:
     build:
       context: ./test_experiment
@@ -89,10 +93,12 @@ services:
       "
     networks:
       - internal
+
 networks:
   internal:
   public:
     driver: bridge
+
 volumes:
   db_new_volume:
   minio_new_volume:
