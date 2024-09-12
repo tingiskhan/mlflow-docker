@@ -47,6 +47,7 @@ services:
     networks:
       - public
       - internal
+      - local
     entrypoint: mlflow server --backend-store-uri mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE} --default-artifact-root s3://${AWS_BUCKET_NAME}/ --artifacts-destination s3://${AWS_BUCKET_NAME}/ -h 0.0.0.0
     depends_on:
       wait-for-db:
@@ -98,6 +99,9 @@ networks:
   internal:
   public:
     driver: bridge
+  local:
+    name: "local"
+    external: true
 
 volumes:
   db_new_volume:
